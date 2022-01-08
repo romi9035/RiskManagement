@@ -13,19 +13,38 @@
 ### General project setup
 general:
   inferBuildTool: true
+  build:
+    mavenExecuteStaticCodeChecks: false
+    npmExecuteLint: false
+  Additional Unit Tests:
+    npmExecuteScripts: false
+    karmaExecuteTests: false
+  Release:
+   cloudFoundryDeploy: true
+   tmsUpload: false
 
 ### Step-specific configuration
 steps:
   mavenExecute:
     dockerImage: devxci/mbtci:1.0.14
-
+  cloudFoundryDeploy:
+    cloudFoundry:
+      credentialsId: 'cfdeploy'
+      apiEndpoint: 'https://api.cf.us10.hana.ondemand.com'
+      org: '0c2f5b00trial'
+      space: 'dev'
+      appName: ""
+    mtaDeployParameters: "-f --version-rule ALL"
   artifactPrepareVersion:
     versioningType: cloud_noTag
+ 
 
 ### Stage-specific configuration
 stages:
   'Confirm':
     manualConfirmation: false
+
+
 
 #  Integration:
 #    credentials:
